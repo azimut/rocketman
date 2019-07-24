@@ -5,15 +5,16 @@
          (row           (read-int   stream))
          (value         (read-float stream))
          (interpolation (read-byte  stream))
-         (track         (aref (state-tracks obj) track-id)))
-    (a:if-let ((position (position row track :key #'key-row)))
-      (setf (key-value         (elt track position)) value
-            (key-interpolation (elt track position)) interpolation)
-      (progn (push (make-instance 'key :row row :interpolation interpolation :value value)
-                   (aref (state-tracks obj) track-id))
-             (sort (aref (state-tracks obj) track-id)
-                   #'<
-                   :key #'key-row)))))
+         (track         (aref (state-tracks obj) track-id))
+         (position      (position row track :key #'key-row)))
+    (if position
+        (setf (key-value         (elt track position)) value
+              (key-interpolation (elt track position)) interpolation)
+        (progn (push (make-instance 'key :row row :interpolation interpolation :value value)
+                     (aref (state-tracks obj) track-id))
+               (sort (aref (state-tracks obj) track-id)
+                     #'<
+                     :key #'key-row)))))
 (defmethod handle-delete-key ((obj rocket) stream)
   (let* ((track-id (read-int stream))
          (row      (read-int stream))
