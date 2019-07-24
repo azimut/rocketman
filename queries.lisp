@@ -1,24 +1,15 @@
 (in-package #:rocketman)
 
-;;(add-track "underwater:cam.x)
-;;(get-track "underwater:cam.x")
-
 (defmethod get-track :around ((obj rocket) (track-id string))
   (let ((id (gethash track-id (state-name2id obj))))
     (if id
         (get-track obj id)
         0f0)))
 
-;; NUMBER
-
 (declaim (inline interpolate))
 (defun interpolate (first second row)
   (let ((dt (/ (- row (key-row first))
                (- (key-row second)))))
-    ;; STEP = 0
-    ;; LINEAR = 1
-    ;; SMOOTH = 2
-    ;; RAMP = 3
     (ecase (key-interpolation first)
       (0 (key-value first))
       (1 (+ (* (- (key-value second) (key-value first)) dt)
@@ -33,15 +24,10 @@
          (n-tracks (length track))
          (row (state-row obj)))
     (cond ((= 0 n-tracks)
-           (print "zero")
-           (print track-id)
-           (print track)
            0f0)
           ((< row (key-row (first track)))
-           (print "zero one")
            0f0)
           ((= 1 n-tracks)
-           (print "one")
            (key-value (first track)))
           (t (let ((top-pos (position row track :test #'< :key #'key-row)))
                (if top-pos
