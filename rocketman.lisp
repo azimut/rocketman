@@ -45,11 +45,10 @@
    :port 1338)
   (:documentation "connection"))
 
-(defparameter *rocket* (make-instance 'rocket))
+(defun make-rocket (&key (rps 10))
+  (make-instance 'rocket :rps rps))
 
-(defun init-rocket ()
-  (disconnect *rocket*)
-  (connect    *rocket*))
+(defvar *rocket* (make-rocket))
 
 (defmethod connect ((obj rocket))
   (setf (con-socket obj)
