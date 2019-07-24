@@ -1,6 +1,7 @@
 ;;;; rocketman.lisp
 
 ;; TODO: reinitilize rocket instance?
+;; TODO: handle disconnect (program closed)
 
 (in-package #:rocketman)
 
@@ -14,6 +15,10 @@
    (value         :accessor key-value         :initarg :value)
    (interpolation :accessor key-interpolation :initarg :interpolation))
   (:documentation "track row element"))
+
+(defmethod print-object ((obj key) out)
+  (print-unreadable-object (obj out :type t)
+    (format out "r~d v~f" (key-row obj) (key-value obj))))
 
 (defclass state ()
   ((pausedp :accessor state-pausedp :initarg :pausedp)
