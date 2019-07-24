@@ -10,7 +10,7 @@ Based on [Contraz/pyrocket](https://github.com/Contraz/pyrocket/)
 
 ## Status
 
-"Works for me". All the code I wrote is here and I use it once. But the port is not complete.
+"Works for me". All the code I wrote is here and tested on a vacuum. But the port is not complete.
 
 Pending support for [emoon/rocket](https://github.com/emoon/rocket).
 
