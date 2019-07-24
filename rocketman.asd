@@ -19,4 +19,5 @@
                (:file "rocketman")
                (:file "handlers")
                (:file "standalone")
+               (:file "queries")
                (:file "file")))
