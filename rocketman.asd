@@ -16,6 +16,6 @@
                (:file "decode")
                (:file "encode")
                (:file "rocketman")
-               (:file "receive")
+               (:file "handlers")
                (:file "standalone")
                (:file "file")))
