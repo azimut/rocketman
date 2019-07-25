@@ -16,7 +16,10 @@
           :for track-name := (plump:attribute track "NAME")
           :do (add-track obj track-name)
               (loop :for key :in (plump:get-elements-by-tag-name track "KEY")
-                    :for key-row := (plump:attribute key "ROW")
-                    :for key-value := (plump:attribute key "VALUE")
-                    :for key-interpolation := (plump:attribute key "INTERPOLATION")
-                    :do (set-key obj n-track key-row key-value key-interpolation)))))
+                    :for key-row := (parse-integer (plump:attribute key "ROW"))
+                    :for key-value := (parse-float:parse-float (plump:attribute key "VALUE"))
+                    :for key-interpolation := (parse-integer (plump:attribute key "INTERPOLATION"))
+                    :do (set-key obj n-track
+                                 key-row
+                                 key-value
+                                 key-interpolation)))))

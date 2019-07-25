@@ -7,10 +7,10 @@
   :version "0.0.1"
   :serial t
   :depends-on (#:alexandria
-               #:array-utils
                #:bordeaux-threads
                #:babel
                #:ieee-floats
+               #:parse-float
                #:plump
                #:usocket)
   :components ((:file "package")

@@ -9,8 +9,9 @@
         (progn (push (make-instance 'key :row row
                                          :interpolation interpolation
                                          :value value)
-                     track)
-               (sort track #'< :key #'key-row)))))
+                     (aref (state-tracks obj) track-id))
+               (sort (aref (state-tracks obj) track-id)
+                     #'< :key #'key-row)))))
 
 (defmethod handle-set-key ((obj rocket) stream)
   (let ((track-id      (read-int   stream))

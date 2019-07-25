@@ -94,7 +94,7 @@
     (write-sequence (babel:string-to-octets name) stream)
     (finish-output stream))
   (let ((id (length (state-tracks obj))))
-    (array-utils:vector-push-extend-front (list) (state-tracks obj))
+    (vector-push-extend (list) (state-tracks obj))
     (setf (gethash name (state-name2id obj)) id)))
 
 (defmethod change-row ((obj rocket) row)
