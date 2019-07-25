@@ -1,12 +1,5 @@
 (in-package #:rocketman)
 
-(defun decode-int-le (stream size)
-  "little endian"
-  (let ((int 0))
-    (dotimes (i size int)
-      (setf (ldb (byte 8 (* 8 i)) int)
-            (read-byte stream)))))
-
 (defun decode-int-be (stream size)
   "big endian"
   (let ((int 0))
