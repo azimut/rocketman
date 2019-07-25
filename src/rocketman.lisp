@@ -10,15 +10,10 @@
 (a:define-constant +SERVER-GREET+
   "hello, demo!" :test #'equal)
 
-(defclass key ()
-  ((row           :accessor key-row           :initarg :row)
-   (value         :accessor key-value         :initarg :value)
-   (interpolation :accessor key-interpolation :initarg :interpolation))
-  (:documentation "track row element"))
-
-(defmethod print-object ((obj key) out)
-  (print-unreadable-object (obj out :type t)
-    (format out "r~d v~f" (key-row obj) (key-value obj))))
+(defstruct key
+  (row 0 :type fixnum)
+  (value 0f0 :type single-float)
+  (interpolation 0 :type fixnum))
 
 (defclass state ()
   ((pausedp :accessor state-pausedp :initarg :pausedp)

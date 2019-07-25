@@ -6,9 +6,7 @@
     (if position
         (setf (key-value         (nth position track)) value
               (key-interpolation (nth position track)) interpolation)
-        (progn (push (make-instance 'key :row row
-                                         :interpolation interpolation
-                                         :value value)
+        (progn (push (make-key :row row :value value :interpolation interpolation)
                      (aref (state-tracks obj) track-id))
                (sort (aref (state-tracks obj) track-id)
                      #'< :key #'key-row)))))
