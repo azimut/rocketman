@@ -23,8 +23,10 @@
          (keys     (aref (state-tracks obj) track-id)))
     (setf (aref (state-tracks obj) track-id)
           (remove row keys :key #'key-row :test #'=))))
+(defmethod set-row ((obj rocket) value)
+  (setf (state-row obj) value))
 (defmethod handle-set-row ((obj rocket) stream)
-  (setf (state-row obj) (read-int stream)))
+  (set-row obj (read-int stream)))
 (defmethod handle-pause ((obj rocket) stream)
   (setf (state-pausedp obj) (read-byte stream)))
 ;; TODO: handle-save-tracks

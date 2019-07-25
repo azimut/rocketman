@@ -8,6 +8,7 @@
            #:load-file
            #:add-track
            #:get-track
+           #:set-row
            #:update
            #:connect
            #:disconnect))
