@@ -1,6 +1,6 @@
 # rocketman
 
-TCP client for [rocket/rocket](https://github.com/rocket/rocket).
+TCP client for [rocket/rocket](https://github.com/rocket/rocket) or [emoon/rocket](https://github.com/emoon/rocket) sync-trackers.
 
 Based on [Contraz/pyrocket](https://github.com/Contraz/pyrocket/)
 
@@ -34,13 +34,7 @@ ROCKETMAN > (get-track "sky:clouds")
 3.2f0
 ```
 
-Note: you will likely won't use (run-standalone) but use your own render loop calling `(update)` on it.
-
-## Status
-
-"it works?"
-
-Pending support for [emoon/rocket](https://github.com/emoon/rocket).
+Note: you will likely won't use `(run-standalone)` but use your own render loop calling `(update)` on it.
 
 ## License
 
