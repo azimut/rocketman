@@ -2,7 +2,7 @@
 
 (defvar *rocket-thread* nil)
 
-(defun run-rocket ()
+(defun run-standalone ()
   (when (and (con-socket *rocket*)
              (not *rocket-thread*))
     (setf *rocket-thread*

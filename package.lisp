@@ -4,6 +4,7 @@
   (:local-nicknames (#:a #:alexandria))
   (:use #:cl)
   (:export #:make-rocket
+           #:run-standalone
            #:load-file
            #:add-track
            #:get-track
