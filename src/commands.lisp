@@ -1,0 +1,22 @@
+(in-package #:rocketman)
+
+(defmethod add-track :around ((obj rocket) name)
+  (unless (member name (a:hash-table-keys (state-name2id obj))
+                  :test #'string=)
+    (call-next-method)))
+
+(defmethod add-track ((obj rocket) name)
+  (let ((stream (usocket:socket-stream (con-socket obj))))
+    (write-byte 2 stream)
+    (write-int (length name) stream)
+    (write-sequence (babel:string-to-octets name) stream)
+    (finish-output stream))
+  (let ((id (length (state-tracks obj))))
+    (vector-push-extend (list) (state-tracks obj))
+    (setf (gethash name (state-name2id obj)) id)))
+
+(defmethod change-row ((obj rocket) row)
+  (let ((stream (usocket:socket-stream (con-socket obj))))
+    (write-byte 3 stream)
+    (write-int (floor row) stream)
+    (finish-output stream)))

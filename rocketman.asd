@@ -18,6 +18,7 @@
                (:file "decode")
                (:file "encode")
                (:file "rocketman")
+               (:file "commands")
                (:file "handlers")
                (:file "standalone")
                (:file "queries")

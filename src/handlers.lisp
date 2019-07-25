@@ -11,6 +11,9 @@
                (sort (aref (state-tracks obj) track-id)
                      #'< :key #'key-row)))))
 
+(defmethod set-row ((obj rocket) value)
+  (setf (state-row obj) value))
+
 (defmethod handle-set-key ((obj rocket) stream)
   (let ((track-id      (read-int   stream))
         (row           (read-int   stream))
@@ -23,8 +26,6 @@
          (keys     (aref (state-tracks obj) track-id)))
     (setf (aref (state-tracks obj) track-id)
           (remove row keys :key #'key-row :test #'=))))
-(defmethod set-row ((obj rocket) value)
-  (setf (state-row obj) value))
 (defmethod handle-set-row ((obj rocket) stream)
   (set-row obj (read-int stream)))
 (defmethod handle-pause ((obj rocket) stream)
