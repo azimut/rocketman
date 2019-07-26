@@ -28,7 +28,8 @@
    :lmp 0f0
    :pausedp 0
    :name2id (make-hash-table :test #'equal)
-   :tracks (make-array 0 :adjustable t :fill-pointer 0)))
+   :tracks (make-array 0 :adjustable t :fill-pointer 0))
+  (:documentation "container for the rocket state"))
 
 (defclass rocket (state)
   ((socket  :accessor con-socket  :initarg :socket)
@@ -43,7 +44,8 @@
 (defun make-rocket (&key (rps 10))
   (make-instance 'rocket :rps rps))
 
-(defvar *rocket* (make-rocket))
+(defvar *rocket* (make-rocket)
+  "default ROCKET object")
 
 (defmethod connect ((obj rocket))
   (setf (con-socket obj)
@@ -75,11 +77,8 @@
     (let* ((meter (* .001f0 (get-internal-real-time)))
            (time-span (- meter (state-lmp obj))))
       (setf (state-lmp obj) meter)
-      (setf (state-row obj) (+ (state-row obj) (* time-span (state-rps obj)))))))
-
-(defmethod (setf state-row) :before (value obj)
-  (unless (= (state-row obj) value)
-    (change-row obj value)))
+      (setf (state-row obj) (+ (state-row obj) (* time-span (state-rps obj))))
+      (change-row obj (state-row obj)))))
 
 (defmethod (setf state-pausedp) :after (value obj)
   (when (zerop value)
