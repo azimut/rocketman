@@ -21,14 +21,16 @@
    (rps     :accessor state-rps     :initarg :rps :documentation "rows per second")
    (lmp     :accessor state-lmp     :initarg :lmp :documentation "last meter point")
    (name2id :accessor state-name2id :initarg :name2id)
-   (tracks  :accessor state-tracks  :initarg :tracks))
+   (tracks  :accessor state-tracks  :initarg :tracks)
+   (stime   :accessor state-stime   :initarg :stime))
   (:default-initargs
-   :row 0f0
+   :row 0d0
    :rps 10
-   :lmp 0f0
+   :lmp 0d0
    :pausedp 0
    :name2id (make-hash-table :test #'equal)
-   :tracks (make-array 0 :adjustable t :fill-pointer 0))
+   :tracks (make-array 0 :adjustable t :fill-pointer 0)
+   :stime (local-time:now))
   (:documentation "container for the rocket state"))
 
 (defclass rocket (state)
@@ -73,8 +75,10 @@
 (defmethod update progn ((obj state))
   (when (zerop (state-pausedp obj))
     (when (zerop (state-lmp obj))
-      (setf (state-lmp obj) (* .001f0 (get-internal-real-time))))
-    (let* ((meter (* .001f0 (get-internal-real-time)))
+      (setf (state-lmp obj) (local-time:timestamp-difference (local-time:now)
+                                                             (state-stime obj))))
+    (let* ((meter (local-time:timestamp-difference (local-time:now)
+                                                   (state-stime obj)))
            (time-span (- meter (state-lmp obj))))
       (setf (state-lmp obj) meter)
       (setf (state-row obj) (+ (state-row obj) (* time-span (state-rps obj))))
@@ -82,4 +86,4 @@
 
 (defmethod (setf state-pausedp) :after (value obj)
   (when (zerop value)
-    (setf (state-lmp obj) 0f0)))
+    (setf (state-lmp obj) 0d0)))

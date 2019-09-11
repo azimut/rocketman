@@ -11,6 +11,7 @@
                #:bordeaux-threads
                #:babel
                #:ieee-floats
+               #:local-time
                #:parse-float
                #:plump
                #:usocket)
