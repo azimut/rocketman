@@ -4,12 +4,14 @@
   (let* ((track    (aref (state-tracks obj) track-id))
          (position (position row track :key #'key-row :test #'=)))
     (if position
+        ;; Replace row values
         (setf (key-value         (nth position track)) value
               (key-interpolation (nth position track)) interpolation)
+        ;; Push new row to list
         (progn (push (make-key :row row :value value :interpolation interpolation)
                      (aref (state-tracks obj) track-id))
-               (sort (aref (state-tracks obj) track-id)
-                     #'< :key #'key-row)))))
+               (sort (aref (state-tracks obj) track-id) #'<
+                     :key #'key-row)))))
 
 (defmethod handle-set-key ((obj rocket) stream)
   (let ((track-id      (read-int   stream))

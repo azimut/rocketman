@@ -3,8 +3,10 @@
 ;; TODO: handle  <group name="cube:" />
 ;; TODO: total rows??
 
-(defmethod load-file :around (obj filename)
+(defmethod load-file :around ((obj rocket) filename)
+  "Clean old state, if any"
   (setf (fill-pointer (state-tracks obj)) 0)
+  (clrhash (state-name2id obj))
   (call-next-method))
 
 (defmethod load-file ((obj rocket) filename)
@@ -19,7 +21,8 @@
                     :for key-row := (parse-integer (plump:attribute key "ROW"))
                     :for key-value := (parse-float:parse-float (plump:attribute key "VALUE"))
                     :for key-interpolation := (parse-integer (plump:attribute key "INTERPOLATION"))
-                    :do (set-key obj n-track
+                    :do (set-key obj
+                                 n-track
                                  key-row
                                  key-value
                                  key-interpolation)))))

@@ -14,26 +14,26 @@
       (3 (+ (key-value first) (* dv (expt dt 2)))))))
 
 (defmethod get-track :around ((obj rocket) (track-id string))
-  "Converts track name to id AND ensure zero if track is missing"
+  "Converts track name to id AND return zero if track is missing"
   (let ((id (gethash track-id (state-name2id obj))))
     (if id
         (get-track obj id)
         0f0)))
 
 (defmethod get-track ((obj rocket) track-id)
-  (let* ((track    (aref (state-tracks obj) track-id))
-         (n-tracks (length track))
-         (row      (state-row obj)))
-    (cond ((= 0 n-tracks)
+  (let* ((track  (aref (state-tracks obj) track-id))
+         (n-rows (length track))
+         (row    (state-row obj)))
+    (cond ((= 0 n-rows)
            0f0)
           ((< row (key-row (first track)))
            0f0)
-          ((= 1 n-tracks)
+          ((= 1 n-rows)
            (key-value (first track)))
-          (t (let ((top-pos (position row track :test #'< :key #'key-row)))
-               (if top-pos
-                   (interpolate (nth (1- top-pos) track)
-                                (nth     top-pos  track)
-                                row)
-                   (key-value (a:lastcar track))))))))
-
+          (t
+           (let ((top-pos (position row track :test #'< :key #'key-row)))
+             (if top-pos
+                 (interpolate (nth (1- top-pos) track)
+                              (nth     top-pos  track)
+                              row)
+                 (key-value (nth (1- n-rows) track))))))))

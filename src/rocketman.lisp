@@ -21,7 +21,8 @@
    (rps     :accessor state-rps     :initarg :rps :documentation "rows per second")
    (lmp     :accessor state-lmp     :initarg :lmp :documentation "last meter point")
    (name2id :accessor state-name2id :initarg :name2id)
-   (tracks  :accessor state-tracks  :initarg :tracks)
+   (tracks  :accessor state-tracks  :initarg :tracks
+            :documentation "adjustable vector of lists of structs of type key")
    (stime   :accessor state-stime   :initarg :stime))
   (:default-initargs
    :row 0d0
@@ -34,9 +35,9 @@
   (:documentation "container for the rocket state"))
 
 (defclass rocket (state)
-  ((socket  :accessor con-socket  :initarg :socket)
-   (host    :accessor con-host    :initarg :host)
-   (port    :accessor con-port    :initarg :port))
+  ((socket :accessor con-socket :initarg :socket)
+   (host   :accessor con-host   :initarg :host)
+   (port   :accessor con-port   :initarg :port))
   (:default-initargs
    :socket NIL
    :host "127.0.0.1"
